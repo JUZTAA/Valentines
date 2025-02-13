@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(180deg, #b19cd9, #d8b9ff);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("C:\Users\Asus\Downloads\purple lily.gif.gif") no-repeat center center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        h1 {
+            margin-top: 50px;
+            font-size: 2.5em;
+            color: #6a0dad;
+            text-shadow: 2px 2px 5px white;
+        }
+
+        .cat-container {
+            margin-top: 20px;
+        }
+
+        .cat-img {
+            width: 200px;
+            height: auto;
+            transition: 0.3s;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #yes {
+            background-color: #6a0dad;
+            color: white;
+        }
+
+        #no {
+            background-color: #cccccc;
+            color: black;
+        }
+
+        @keyframes rainEmojis {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .emoji {
+            position: fixed;
+            top: -50px;
+            font-size: 30px;
+            animation: rainEmojis 2.5s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="caption">Will you be my Valentine? 💜</h1>
+    
+    <div class="cat-container">
+        <img id="catImage" class="cat-img" src="C:\Users\Asus\Downloads\images (6).jpg">
+    </div>
+
+    <div class="container">
+        <button id="yes" onclick="sayYes()">Yes</button>
+        <button id="no" onclick="sayNo()">No</button>
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        const noMessages = [
+            "Please? 🥺", "Are you sure? 😢", "Really? 💔", "Think again... 😞", "You’re breaking my heart! 💘", "Give me a chance? 😭", "Last chance! 💜", "Okay... but I’m sad 😔"
+        ];
+        const sadEmojis = ["😢", "🥺", "💔", "😞", "😭"];
+        const catImages = [
+            "C:\Users\Asus\Downloads\download (6).jpg", 
+            "./images/sad-cat.jpg", 
+            "./images/angry-cat.jpg", 
+            "./images/very-angry-cat.jpg"
+        ];
+
+        function sayYes() {
+            document.getElementById("caption").innerHTML = "Yayyy! 💜 You made my heart so happy! 🥰";
+            document.getElementById("yes").style.fontSize = "30px";
+            document.getElementById("no").style.display = "none";
+            document.getElementById("catImage").src = "C:\Users\Asus\Downloads\tumblr_f0612295c50d8c75401b3ce844521727_cc54249a_400.jpg";
+        }
+
+        function sayNo() {
+            noClickCount++;
+            let yesButton = document.getElementById("yes");
+            let noButton = document.getElementById("no");
+            let catImage = document.getElementById("catImage");
+
+            let currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = (currentSize + 5) + "px";
+
+            if (noClickCount < noMessages.length) {
+                noButton.innerHTML = noMessages[noClickCount];
+            } else {
+                noButton.innerHTML = "No more excuses! 💜";
+            }
+
+            if (noClickCount < catImages.length) {
+                catImage.src = catImages[noClickCount];
+            }
+
+            createSadEmojis(5);
+        }
+
+        function createSadEmojis(count) {
+            for (let i = 0; i < count; i++) {
+                let emoji = document.createElement("div");
+                emoji.innerHTML = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                emoji.classList.add("emoji");
+                document.body.appendChild(emoji);
+
+                emoji.style.left = Math.random() * window.innerWidth + "px";
+                emoji.style.animationDuration = (Math.random() * 2 + 2) + "s";
+
+                setTimeout(() => { emoji.remove(); }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
